@@ -25,7 +25,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
 '''
 
 
-def searchAnilist(animeName):
+def searchAnilistAnime(animeName):
     variables = {
         'search': animeName,
         'page': 1,
