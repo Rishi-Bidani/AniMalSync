@@ -19,21 +19,25 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
                 english
                 romaji
             }
+            coverImage {
+                medium
+            }
+            genres
         }
     }
 }
 '''
 
 
-def searchAnilistAnime(animeName):
+def searchAnilistAnime(animeName, maxResult=30):
     variables = {
         'search': animeName,
         'page': 1,
-        'perPage': 30
+        'perPage': maxResult
     }
     response = requests.post(url, json={'query': query, 'variables': variables})
     result = json.loads(response.text)
     return result["data"]["Page"]["media"]
 
 
-# print(searchAnilist("naruto"))
+# print(searchAnilistAnime("naruto"))
