@@ -10,11 +10,6 @@ ANICLIENT = os.getenv('ANILIST_ID')
 ANISECRET = os.getenv('ANILIST_SECRET')
 ANI_TOKEN = os.getenv('ANILIST_TOKEN')
 
-# Copy paste the following url in the browser
-# https://anilist.co/api/v2/oauth/authorize?client_id={clientID}&response_type=token
-# replacing the {clientID}
-# with your client ID.It will ask you to log in and then provide you with the token to use.
-
 url = 'https://graphql.anilist.co'
 query = '''
 query ($id: Int, $page: Int, $perPage: Int, $search: String) {
