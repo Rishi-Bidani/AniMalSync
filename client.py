@@ -25,7 +25,8 @@ async def searchanilist(ctx, animeName, maxResult=30):
     embedVar = discord.Embed(title=f"Search for: {animeName}", color=0x00ff00)
     result = searchAnilistAnime(animeName, maxResult)
     for obj in result:
-        embedVar.add_field(name=f"{obj['title']['romaji']}", value=f"Genres: {list_to_string(obj['genres'])}",
+        embedVar.add_field(name=f"{obj['title']['romaji']} - ({obj['siteUrl']})",
+                           value=f"Type: {obj['type']}\nGenres: {list_to_string(obj['genres'])}",
                            inline=False)
 
     embedVar.set_image(url=result[0]['coverImage']['medium'])
