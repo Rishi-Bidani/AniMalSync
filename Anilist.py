@@ -12,7 +12,7 @@ ANI_TOKEN = os.getenv('ANILIST_TOKEN')
 
 url = 'https://graphql.anilist.co'
 query = '''
-query ($id: Int, $page: Int, $perPage: Int, $search: String) {
+query ($id: Int, $page: Int, $perPage: Int, $search: String, $MediaType: MediaType) {
     Page (page: $page, perPage: $perPage) {
         pageInfo {
             total
@@ -21,7 +21,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
             hasNextPage
             perPage
         }
-        media (id: $id, search: $search) {
+        media (id: $id, search: $search, type: $MediaType) {
             id
             title {
                 english
@@ -47,28 +47,47 @@ mutation ($id: Int, $mediaId: Int, $status: MediaListStatus) {
 }
 '''
 
+# search_by_id_query = '''
+# query($id: Int) {
+#     media(id: $id){
+#         title {
+#             english
+#             romaji
+#         }
+#         sit
+#     }
+# }
+# '''
 
-def searchAnilistAnime(animeName, maxResult=30):
+
+def searchAnilistAnime(animeName, MediaType="ANIME", maxResult=30):
     variables = {
         'search': animeName,
         'page': 1,
         'perPage': maxResult,
+        'MediaType': MediaType
     }
     response = requests.post(url, json={'query': query, 'variables': variables})
     result = json.loads(response.text)
     return result["data"]["Page"]["media"]
 
 
-def mutate_query(id, status="COMPLETED"):
+def mutate_query(idMut, status):
     variables = {
-        'mediaId': id,
+        'mediaId': idMut,
         'status': status
+    }
+    searchVar = {
+        'id': idMut
     }
     response = requests.post(url, json={'query': mutation_query, 'variables': variables}, headers={'Authorization': ANI_TOKEN})
     result = json.loads(response.text)
-    print(result)
+    show_details_request = requests.post(url, json={'query': query, 'variables': searchVar})
+    show_details = json.loads(show_details_request.text)
+    # print(show_details["data"]["Page"]['media'])
+    return result, show_details["data"]["Page"]['media']
 
 
 # print(searchAnilistAnime("naruto"))
 
-mutate_query(112608)
+# mutate_query(4884)

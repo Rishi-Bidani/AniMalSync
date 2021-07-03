@@ -36,7 +36,7 @@ For me I copied the token from the url directly, it asked me to authorise the ap
 ## Commands
 
 ```gitignore
-$searchanilist name maxResult
+$searchani name maxResult
 
 # name = What you want to search AnimeName or MangaName
 
