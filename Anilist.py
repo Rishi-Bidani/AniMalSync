@@ -21,6 +21,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $MediaType: MediaTy
         }
         media (id: $id, search: $search, type: $MediaType) {
             id
+            idMal
             title {
                 english
                 romaji

@@ -5,7 +5,7 @@ import os
 load_dotenv()
 MAL_TOKEN = os.getenv('MAL_TOKEN')
 
-# print(User.login("Gateterr", "not my real password")) # This will return a token
+# print(User.login("Username", "not my real password")) # This will return a token
 
 
 def searchMAL(animeName):

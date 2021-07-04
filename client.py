@@ -39,9 +39,20 @@ async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
     embedVar = discord.Embed(title=f"Search for: {animeName}", color=0x00ff00)
     result = searchAnilistAnime(animeName, MediaType, maxResult)
     for obj in result:
-        embedVar.add_field(name=f"{obj['title']['romaji']} - ({obj['siteUrl']})",
-                           value=f"Type: {obj['type']} ID: {obj['id']}\nGenres: {list_to_string(obj['genres'])}",
-                           inline=False)
+        stype = obj['type']  # Show Type - Anime, Manga
+        ani_id = obj['id']  # AniList Id
+        mal_id = obj['idMal']  # MyAnimeList ID
+        genres = list_to_string(obj['genres'])
+        empty = ""
+        # embedVar.add_field(name=f"{obj['title']['romaji']} - ({obj['siteUrl']})",
+        #                    value=f"Type: {stype}\n**AniList ID: ** {ani_id}   **MAL ID: **{mal_id}\nGenres: {genres}",
+        #                    inline=False)
+        embedVar.add_field(name=f"{obj['title']['romaji']}", value=f"Link: {obj['siteUrl']}", inline=False)
+        embedVar.add_field(name="Type: ", value=f"{stype}", inline=True)
+        embedVar.add_field(name="AniList ID: ", value=f"{ani_id}", inline=True)
+        embedVar.add_field(name="MAL ID: ", value=f"{mal_id}", inline=True)
+        embedVar.add_field(name="Genres: ", value=f"{genres}\n\n", inline=False)
+        embedVar.add_field(name="__________", value=f"** **\n")
 
     embedVar.set_image(url=result[0]['coverImage']['medium'])
     await ctx.channel.send(embed=embedVar)
