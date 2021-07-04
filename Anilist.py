@@ -1,7 +1,5 @@
 import requests
 import json
-import traceback
-import time
 from dotenv import load_dotenv
 import os
 

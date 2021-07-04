@@ -31,6 +31,11 @@ async def on_ready():
 
 @client.command()
 async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
+    if MediaType in ["m", "manga", "MANGA", "man"]:
+        MediaType = "MANGA"
+    else:
+        MediaType = "ANIME"
+
     embedVar = discord.Embed(title=f"Search for: {animeName}", color=0x00ff00)
     result = searchAnilistAnime(animeName, MediaType, maxResult)
     for obj in result:
@@ -84,6 +89,22 @@ async def searchmal(ctx, animeName):
     for obj in searchMAL(animeName):
         embedVar.add_field(name=f"{obj['node']['title']}", value=f"ID: {obj['node']['id']}", inline=False)
     await ctx.channel.send(embed=embedVar)
+
+
+@client.command()
+async def updatemal(ctx, idMut, status="completed"):
+    if status == "completed":
+        status = "completed"
+    elif status in ["c", "curr", "current", "CURRENT", "w", "watch", "watching", "WATCHING"]:
+        status = "watching"
+    elif status in ["p", "plan", "planning", "PLANNING", "plantowatch", "plan_to_watch"]:
+        status = "plan_to_watch"
+    elif status in ["d", "drop", "DROPPED"]:
+        status = "dropped"
+    else:
+        embed_err = discord.Embed(title="Somthing went Wrong", color=RED)
+        await ctx.channel.send(embed=embed_err)
+        return
 
 
 client.run(TOKEN)

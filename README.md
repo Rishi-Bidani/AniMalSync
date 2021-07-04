@@ -25,10 +25,11 @@ print(User.login("Username", "Password")) # This will return a token
 ```
 
 To Get Anilist Token
-```text
+```
 Copy paste the following url in the browser
 https://anilist.co/api/v2/oauth/authorize?client_id={clientID}&response_type=token
 replacing the {clientID} with your ID, replace the {} as well
+
 It will ask you to log in and then provide you with the token to use.
 For me I copied the token from the url directly, it asked me to authorise the app and didn't reach anything else
 ```
@@ -43,8 +44,17 @@ $searchani name maxResult
 # maxResult = max number of items displayed
 ```
 
+```python
+$updateani id status
+# id = ID of the anime, you can find it by search the anime
+# status = default is complete,
+# Or use the following for status (choose one from the list)
+current = ["c", "curr", "current", "CURRENT"]
+planning = ["p", "plan", "planning", "PLANNING"]
+dropped = ["d", "drop", "DROPPED"]
+```
+
 ```gitignore
 $searchmal name
 # name = what u want to search
 ```
-
