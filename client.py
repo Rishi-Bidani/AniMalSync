@@ -44,6 +44,12 @@ async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
 
 @client.command()
 async def updateani(ctx, idMut, status="COMPLETED"):
+    """
+    :param ctx: context, for sending messages
+    :param idMut: ID of the anime
+    :param status: completed/planning/dropped - check if else below
+    :return: sends and embed message with the status specified(after update) or an error message
+    """
     if status == "COMPLETED":
         status = "COMPLETED"
     elif status in ["c", "curr", "current", "CURRENT"]:

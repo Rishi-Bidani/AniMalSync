@@ -13,6 +13,12 @@ def searchMAL(animeName):
     return result["data"]
 
 
+def updateMAL(idMut, status):
+    result = User.updateList(MAL_TOKEN, idMut, {'status': status})
+    print(result)
+
+
 # for i in searchMAL("naruto"):
 #     print(i["node"])
 
+updateMAL(4884, "completed")
