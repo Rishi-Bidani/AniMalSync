@@ -5,7 +5,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from Anilist import searchAnilistAnime, mutate_query
-from mal import searchMAL
+from mal import searchMAL, searchById, updateMAL
 
 # =================== COLORS =====================
 RED = Color.red()
@@ -31,6 +31,14 @@ async def on_ready():
 
 @client.command()
 async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
+    """
+    :param ctx: Just a context - worry about this parameter - it's used to display messages etc.
+    :param animeName: THe anime Name you want to search
+    :param MediaType: anime or manga, default is anime, use any of the following to change it to manga
+                      ["m", "manga", "MANGA", "man"]
+    :param maxResult: Max number of items you want to display
+    :return: embedded message
+    """
     if MediaType in ["m", "manga", "MANGA", "man"]:
         MediaType = "MANGA"
     else:
@@ -104,6 +112,7 @@ async def searchmal(ctx, animeName):
 
 @client.command()
 async def updatemal(ctx, idMut, status="completed"):
+    animeName = searchById(idMut)["title"]
     if status == "completed":
         status = "completed"
     elif status in ["c", "curr", "current", "CURRENT", "w", "watch", "watching", "WATCHING"]:
@@ -116,6 +125,11 @@ async def updatemal(ctx, idMut, status="completed"):
         embed_err = discord.Embed(title="Somthing went Wrong", color=RED)
         await ctx.channel.send(embed=embed_err)
         return
+    updateQuery = updateMAL(idMut, status)
+    embedVar = discord.Embed(title=f"Updating: {idMut}", color=GREEN)
+    embedVar.add_field(name=f"Title: ", value=f"{animeName}\n", inline=True)
+    embedVar.add_field(name="Status: ", value=f"{updateQuery['status']}\n", inline=True)
+    await ctx.channel.send(embed=embedVar)
 
 
 client.run(TOKEN)

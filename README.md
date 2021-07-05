@@ -44,14 +44,15 @@ $searchani name maxResult
 # maxResult = max number of items displayed
 ```
 
-```python
+```gitignore
 $updateani id status
 # id = ID of the anime, you can find it by search the anime
 # status = default is complete,
 # Or use the following for status (choose one from the list)
-current = ["c", "curr", "current", "CURRENT"]
-planning = ["p", "plan", "planning", "PLANNING"]
-dropped = ["d", "drop", "DROPPED"]
+# ________________________________________________________
+# current = ["c", "curr", "current", "CURRENT"]
+# planning = ["p", "plan", "planning", "PLANNING"]
+# dropped = ["d", "drop", "DROPPED"]
 ```
 
 ```gitignore
