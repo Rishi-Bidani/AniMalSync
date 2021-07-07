@@ -46,6 +46,26 @@ mutation ($id: Int, $mediaId: Int, $status: MediaListStatus) {
 }
 '''
 
+AiringSchedule_query = '''
+query($page: Int){
+Page(page:$page){
+  media(status:RELEASING season: SUMMER){
+    id
+    title{
+      english
+      romaji
+    }
+    airingSchedule{
+        nodes{
+            timeUntilAiring
+        }
+    }
+  }
+}
+}
+'''
+
+
 # search_by_id_query = '''
 # query($id: Int) {
 #     media(id: $id){
@@ -59,7 +79,7 @@ mutation ($id: Int, $mediaId: Int, $status: MediaListStatus) {
 # '''
 
 
-def searchAnilistAnime(animeName, MediaType="ANIME", maxResult=30):
+def searchAnilistAnime(animeName, maxResult=30, MediaType="ANIME"):
     variables = {
         'search': animeName,
         'page': 1,
@@ -79,7 +99,8 @@ def mutate_query(idMut, status):
     searchVar = {
         'id': idMut
     }
-    response = requests.post(url, json={'query': mutation_query, 'variables': variables}, headers={'Authorization': ANI_TOKEN})
+    response = requests.post(url, json={'query': mutation_query, 'variables': variables},
+                             headers={'Authorization': ANI_TOKEN})
     result = json.loads(response.text)
     show_details_request = requests.post(url, json={'query': query, 'variables': searchVar})
     show_details = json.loads(show_details_request.text)
@@ -87,6 +108,17 @@ def mutate_query(idMut, status):
     return result, show_details["data"]["Page"]['media']
 
 
+def airingScedule():
+    variables = {
+        'page': 1
+    }
+    response = requests.post(url, json={'query': AiringSchedule_query, 'variables': variables}, headers={'Authorization': ANI_TOKEN})
+    result = json.loads(response.text)
+    print(result)
+
+
 # print(searchAnilistAnime("naruto"))
 
 # mutate_query(4884)
+
+airingScedule()

@@ -30,7 +30,7 @@ async def on_ready():
 # ======================================================================================== #
 
 @client.command()
-async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
+async def searchani(ctx, animeName, maxResult=30, MediaType="ANIME"):
     """
     :param ctx: Just a context - worry about this parameter - it's used to display messages etc.
     :param animeName: THe anime Name you want to search
@@ -45,7 +45,7 @@ async def searchani(ctx, animeName, MediaType="ANIME", maxResult=30):
         MediaType = "ANIME"
 
     embedVar = discord.Embed(title=f"Search for: {animeName}", color=0x00ff00)
-    result = searchAnilistAnime(animeName, MediaType, maxResult)
+    result = searchAnilistAnime(animeName, maxResult, MediaType)
     for obj in result:
         stype = obj['type']  # Show Type - Anime, Manga
         ani_id = obj['id']  # AniList Id
